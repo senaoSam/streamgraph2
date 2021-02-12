@@ -1,7 +1,7 @@
 console.clear();
 
 var n = 3, // number of layers
-  m = 300, // number of samples per layer
+  m = 1000, // number of samples per layer
   k = 1; // number of bumps per layer
 
 function random0_9() {
