@@ -1,7 +1,7 @@
 console.clear();
 
-var n = 2, // number of layers
-  m = 500, // number of samples per layer
+var n = 3, // number of layers
+  m = 300, // number of samples per layer
   k = 1; // number of bumps per layer
 
 function random0_9() {
@@ -18,29 +18,38 @@ const low = [0.1, 0.2, 0.3, 0.5, 0.8, 1, 1.5, 2, 2.5, 3];
 function randomData() {
   let _arr = [];
   let _arr2 = [];
+  let _arr3 = [];
   for (let i = 0; i < m; i++) {
-    _arr[i] = medium2[random0_9()];
+    _arr[i] = low[random0_9()];
     _arr2[i] = low[random0_9()];
+    _arr3[i] = low[random0_9()];
 
-    if (random0_9() % 3 === 0 && random0_9() % 5 === 0) {
-      _arr[i] = medium2[random0_9()];
-    }
-    if (random0_9() % 3 === 0 && random0_9() % 7 === 0) {
-      _arr[i] = hight[random0_9()];
-    }
-    if (random0_9() % 3 === 0 && random0_9() % 8 === 0) {
-      _arr[i] = 0;
-    }
-
-    if (random0_9() % 3 === 0 && random0_9() % 6 === 0) {
+    if (random0_9() % 3 === 0 ) {
       _arr2[i] = medium[random0_9()];
     }
-    if (random0_9() % 3 === 0 && random0_9() % 6 === 0) {
-      _arr2[i] = 1;
+    if (random0_9() % 3 === 0 ) {
+      _arr2[i] = hight[random0_9()];
+    }
+    if (random0_9() % 3 === 0 ) {
+      _arr2[i] = 0;
+    }
+
+    if (random0_9() % 3 === 0 ) {
+      _arr[i] = medium2[random0_9()];
+    }
+    if (random0_9() % 3 === 0 ) {
+      _arr[i] = medium2[random0_9()]*7;
+    }
+    
+    if (random0_9() % 3 === 0 ) {
+      _arr3[i] = medium2[random0_9()];
+    }
+    if (random0_9() % 6 === 0 ) {
+      _arr3[i] = hight[random0_9()];
     }
   }
   
-  return [ _arr, _arr2 ]
+  return [ _arr, _arr2, _arr3 ]
 }
 
 const _bump = randomData();
@@ -70,13 +79,19 @@ var area = d3
   .y0((d) => y(d[0]))
   .y1((d) => y(d[1]));
 
+
+const colorTable = {
+  '2': 'green',
+  '1': 'yellow',
+  '0': 'red'
+}
 svg
   .selectAll("path")
   .data(layers)
   .enter()
   .append("path")
   .attr("d", area)
-  .attr("fill", (d, i) => (i === 0 ? "lightblue" : "red"));
+  .attr("fill", (d, i) => (colorTable[i]));
 
 function stackMax(layer) {
   return d3.max(layer, (d) => d[1]);
